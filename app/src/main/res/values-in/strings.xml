@@ -5,4 +5,5 @@
     <string name="history">Riwayat</string>
     <string name="back">Kembali</string>
     <string name="conv_history">Riwayat Konversi</string>
+    <string name="save">Simpan</string>
 </resources>

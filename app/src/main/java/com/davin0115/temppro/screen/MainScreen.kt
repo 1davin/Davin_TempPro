@@ -1,10 +1,8 @@
 package com.davin0115.temppro.screen
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,7 +12,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
@@ -39,20 +36,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.davin0115.cconverter.ui.theme.poppinsFamily
 import com.davin0115.temppro.R
 import com.davin0115.temppro.navigation.Screen
 import com.davin0115.temppro.ui.theme.MainColor
-import com.davin0115.temppro.ui.theme.TempProTheme
+import com.davin0115.temppro.viewmodel.TemperatureViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(navController: NavHostController){
+fun MainScreen(navController: NavHostController, viewModel: TemperatureViewModel){
     Scaffold (
         topBar = {
             TopAppBar(
@@ -81,12 +76,13 @@ fun MainScreen(navController: NavHostController){
             )
         }
     ) { innerPadding ->
-        ScreenContent(modifier = Modifier.padding(innerPadding))
+        ScreenContent(modifier = Modifier.padding(innerPadding), viewModel = viewModel)
+
     }
 }
 
 @Composable
-fun ScreenContent(modifier: Modifier = Modifier) {
+fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel) {
     var input by rememberSaveable { mutableStateOf("") }
     var selectedUnit by rememberSaveable { mutableStateOf("Celsius") }
 
@@ -120,6 +116,12 @@ fun ScreenContent(modifier: Modifier = Modifier) {
         Text("Kelvin: $kelvin")
         Spacer(modifier = Modifier.height(8.dp))
         Spacer(modifier = Modifier.height(8.dp))
+        Button(onClick = {
+            val result = "$input $selectedUnit → ${celsius}C, ${fahrenheit}F, ${kelvin}K"
+            viewModel.addToHistory(result)
+        }) {
+            Text(stringResource(R.string.save))
+        }
     }
 }
 
@@ -127,7 +129,7 @@ fun convertTemperature(inputValue: Float, selectedUnit: String): Triple<Float, F
     val celsius = when (selectedUnit) {
         "Fahrenheit" -> (inputValue - 32) * 5 / 9
         "Kelvin" -> inputValue - 273.15f
-        else -> inputValue // Asumsikan input adalah dalam Celsius
+        else -> inputValue
     }
     val fahrenheit = (celsius * 9 / 5) + 32
     val kelvin = celsius + 273.15f
@@ -139,7 +141,7 @@ fun UnitDropdownMenu(selectedUnit: String, units: List<String>, onSelect: (Strin
     var expandedState by remember { mutableStateOf(false) }
     Box {
         Button(onClick = { expandedState = true }) {
-            Text(selectedUnit)
+                Text(selectedUnit)
         }
         DropdownMenu(
             expanded = expandedState,
