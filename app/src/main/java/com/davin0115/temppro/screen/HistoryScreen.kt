@@ -67,7 +67,7 @@ fun HistoryScreen(navController: NavHostController, viewModel: TemperatureViewMo
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(onClick = { navController.popBackStack() }) {
-                Text("Back")
+                Text(text = stringResource(R.string.back))
             }
         }
     }

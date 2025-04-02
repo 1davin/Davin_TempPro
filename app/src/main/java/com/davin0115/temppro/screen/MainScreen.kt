@@ -116,7 +116,7 @@ fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel
                 input = it
                 inputError = false
             },
-            label = { Text(text = "Enter Temperature") },
+            label = { Text(text = stringResource(R.string.label)) },
             trailingIcon = { if (inputError) IconPicker() },
             supportingText = { if (inputError) ErrorHint() },
             isError = inputError,
@@ -147,7 +147,7 @@ fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel
             modifier = Modifier.padding(top = 8.dp),
             contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
         ) {
-            Text("Save")
+            Text(text = stringResource(R.string.save))
         }
     }
 }
