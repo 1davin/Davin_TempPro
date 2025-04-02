@@ -6,4 +6,6 @@
     <string name="conv_history">Conversion History</string>
     <string name="save">Save</string>
     <string name="input_invalid">Input cannot be empty!</string>
+    <string name="input_success">Saved!</string>
+
 </resources>

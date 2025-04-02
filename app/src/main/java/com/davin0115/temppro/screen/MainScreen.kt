@@ -1,5 +1,6 @@
 package com.davin0115.temppro.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -46,6 +47,8 @@ import com.davin0115.temppro.R
 import com.davin0115.temppro.navigation.Screen
 import com.davin0115.temppro.ui.theme.MainColor
 import com.davin0115.temppro.viewmodel.TemperatureViewModel
+import android.content.Context
+import androidx.compose.ui.platform.LocalContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -89,6 +92,7 @@ fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel
     var inputError by rememberSaveable { mutableStateOf(false) }
     var selectedUnit by rememberSaveable { mutableStateOf("Celsius") }
 
+    val context = LocalContext.current
     val units = listOf("Celsius", "Fahrenheit", "Kelvin")
     val inputValue = input.toFloatOrNull() ?: 0f
     val (celsius, fahrenheit, kelvin) = convertTemperature(inputValue, selectedUnit)
@@ -103,15 +107,17 @@ fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel
     ) {
         Text("Temperature Converter", fontSize = 20.sp)
         Spacer(modifier = Modifier.height(8.dp))
+
         UnitDropdownMenu(selectedUnit, units) { selectedUnit = it }
+
         OutlinedTextField(
             value = input,
             onValueChange = {
                 input = it
                 inputError = false
-                            },
-            label = { Text(text = stringResource(R.string.label)) },
-            trailingIcon = { if(inputError) IconPicker() },
+            },
+            label = { Text(text = "Enter Temperature") },
+            trailingIcon = { if (inputError) IconPicker() },
             supportingText = { if (inputError) ErrorHint() },
             isError = inputError,
             keyboardOptions = KeyboardOptions.Default.copy(
@@ -119,12 +125,13 @@ fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel
             ),
             modifier = Modifier.fillMaxWidth()
         )
+
         Spacer(modifier = Modifier.height(8.dp))
         Text("Celsius: $celsius")
         Text("Fahrenheit: $fahrenheit")
         Text("Kelvin: $kelvin")
         Spacer(modifier = Modifier.height(8.dp))
-        Spacer(modifier = Modifier.height(8.dp))
+
         Button(
             onClick = {
                 if (input.isBlank()) {
@@ -134,6 +141,8 @@ fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel
 
                 val result = "$input $selectedUnit → ${celsius}C, ${fahrenheit}F, ${kelvin}K"
                 viewModel.addToHistory(result)
+
+                showToast(context, context.getString(R.string.input_success))
             },
             modifier = Modifier.padding(top = 8.dp),
             contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
@@ -142,6 +151,11 @@ fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel
         }
     }
 }
+
+fun showToast(context: Context, message: String) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+}
+
 
 fun convertTemperature(inputValue: Float, selectedUnit: String): Triple<Float, Float, Float> {
     val celsius = when (selectedUnit) {
