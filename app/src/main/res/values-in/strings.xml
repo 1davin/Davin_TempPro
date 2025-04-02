@@ -6,4 +6,5 @@
     <string name="back">Kembali</string>
     <string name="conv_history">Riwayat Konversi</string>
     <string name="save">Simpan</string>
+    <string name="input_invalid">Input tidak boleh kosong!</string>
 </resources>

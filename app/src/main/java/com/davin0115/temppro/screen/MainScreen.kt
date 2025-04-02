@@ -3,6 +3,7 @@ package com.davin0115.temppro.screen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +13,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
@@ -84,6 +86,7 @@ fun MainScreen(navController: NavHostController, viewModel: TemperatureViewModel
 @Composable
 fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel) {
     var input by rememberSaveable { mutableStateOf("") }
+    var inputError by rememberSaveable { mutableStateOf(false) }
     var selectedUnit by rememberSaveable { mutableStateOf("Celsius") }
 
     val units = listOf("Celsius", "Fahrenheit", "Kelvin")
@@ -103,8 +106,14 @@ fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel
         UnitDropdownMenu(selectedUnit, units) { selectedUnit = it }
         OutlinedTextField(
             value = input,
-            onValueChange = { input = it },
-            label = { Text("Enter temperature") },
+            onValueChange = {
+                input = it
+                inputError = false
+                            },
+            label = { Text(text = stringResource(R.string.label)) },
+            trailingIcon = { if(inputError) IconPicker() },
+            supportingText = { if (inputError) ErrorHint() },
+            isError = inputError,
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number
             ),
@@ -116,11 +125,20 @@ fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel
         Text("Kelvin: $kelvin")
         Spacer(modifier = Modifier.height(8.dp))
         Spacer(modifier = Modifier.height(8.dp))
-        Button(onClick = {
-            val result = "$input $selectedUnit → ${celsius}C, ${fahrenheit}F, ${kelvin}K"
-            viewModel.addToHistory(result)
-        }) {
-            Text(stringResource(R.string.save))
+        Button(
+            onClick = {
+                if (input.isBlank()) {
+                    inputError = true
+                    return@Button
+                }
+
+                val result = "$input $selectedUnit → ${celsius}C, ${fahrenheit}F, ${kelvin}K"
+                viewModel.addToHistory(result)
+            },
+            modifier = Modifier.padding(top = 8.dp),
+            contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+        ) {
+            Text("Save")
         }
     }
 }
@@ -160,6 +178,16 @@ fun UnitDropdownMenu(selectedUnit: String, units: List<String>, onSelect: (Strin
     }
 }
 
+@Composable
+fun IconPicker() {
+    Icon(imageVector = Icons.Filled.Warning, contentDescription = "Error", tint = MaterialTheme.colorScheme.error)
+}
+
+
+@Composable
+fun ErrorHint() {
+        Text(text = stringResource(R.string.input_invalid))
+}
 
 
 
