@@ -7,5 +7,13 @@
     <string name="save">Save</string>
     <string name="input_invalid">Input cannot be empty!</string>
     <string name="input_success">Saved!</string>
+    <string name="definition">Temperature is a measure of the degree of hotness or coldness of an object. Temperature can be measured and expressed in various units, such as Celsius, Fahrenheit, and Kelvin.</string>
+    <string name="units">Units</string>
+    <string name="ctof">Celsius to Fahrenheit: (C × 9/5) + 32</string>
+    <string name="ftoc">Fahrenheit to Celsius: (F - 32) × 5/9</string>
+    <string name="ctok">Celsius to Kelvin: C + 273.15</string>
+    <string name="ktoc">Kelvin to Celsius: K - 273.15</string>
+
+
 
 </resources>

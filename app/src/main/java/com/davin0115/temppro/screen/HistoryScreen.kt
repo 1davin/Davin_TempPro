@@ -45,10 +45,7 @@ fun HistoryScreen(navController: NavHostController, viewModel: TemperatureViewMo
     Scaffold(
         topBar = {
             GradientTopBarHistory (
-                title = stringResource(R.string.history)
-            ) {
-
-            }
+                title = stringResource(R.string.history))
         }
     ) { innerPadding ->
         Column(
@@ -102,7 +99,6 @@ fun HistoryScreen(navController: NavHostController, viewModel: TemperatureViewMo
 @Composable
 fun GradientTopBarHistory(
     title: String,
-    onActionClick: () -> Unit
 ) {
     Box(
         modifier = Modifier

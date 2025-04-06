@@ -20,13 +20,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.outlined.ArrowDropDown
 import androidx.compose.material.icons.outlined.Refresh
@@ -81,16 +79,18 @@ fun MainScreen(navController: NavHostController, viewModel: TemperatureViewModel
     ) { innerPadding ->
         ScreenContent(
             modifier = Modifier.padding(innerPadding),
-            viewModel = viewModel
+            viewModel = viewModel,
+            navController
         )
     }
 }
 
 @Composable
-fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel) {
+fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel, navController: NavHostController) {
     var input by rememberSaveable { mutableStateOf("") }
     var inputError by rememberSaveable { mutableStateOf(false) }
     var selectedUnit by rememberSaveable { mutableStateOf("Celsius") }
+
 
     val context = LocalContext.current
     listOf("Celsius", "Fahrenheit", "Kelvin")
@@ -128,7 +128,7 @@ fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel
                     width = 1.dp,
                     color = Color.Black,
                     shape = RoundedCornerShape(12.dp)
-            )
+                )
                 .clip(RoundedCornerShape(12.dp))
                 .padding(16.dp)
         ){
@@ -146,14 +146,18 @@ fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel
                     Text("Kelvin: ", fontFamily = poppinsFamily, fontWeight = FontWeight.Bold)
                     Text(text = "$kelvin")
                 }
-                Icon(
-                    imageVector = Icons.Default.Info,
-                    contentDescription = "",
+                IconButton(
+                    onClick = {navController.navigate(Screen.Info.route)},
                     modifier = Modifier
                         .padding(start = 8.dp)
                         .align(Alignment.Top)
-
                 )
+                {
+                    Icon(
+                        imageVector = Icons.Default.Info,
+                        contentDescription = "",
+                    )
+                }
             }
         }
         Spacer(modifier = Modifier.height(8.dp))

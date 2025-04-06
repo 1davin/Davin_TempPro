@@ -8,5 +8,11 @@
     <string name="save">Simpan</string>
     <string name="input_invalid">Input tidak boleh kosong!</string>
     <string name="input_success">Tersimpan!</string>
+    <string name="definition">Suhu adalah ukuran derajat panas atau dingin suatu benda. Suhu dapat diukur dan dinyatakan dalam berbagai satuan, seperti Celsius, Fahrenheit, dan Kelvin.</string>
+    <string name="units">Satuan</string>
+    <string name="ctof">Celsius ke Fahrenheit: (C × 9/5) + 32</string>
+    <string name="ftoc">Fahrenheit ke Celsius: (F - 32) × 5/9</string>
+    <string name="ctok">Celsius ke Kelvin: C + 273.15</string>
+    <string name="ktoc">Kelvin ke Celsius: K - 273.15</string>
 
 </resources>

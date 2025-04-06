@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.davin0115.temppro.screen.HistoryScreen
+import com.davin0115.temppro.screen.InfoScreen
 import com.davin0115.temppro.screen.MainScreen
 import com.davin0115.temppro.viewmodel.TemperatureViewModel
 
@@ -22,6 +23,9 @@ fun SetupNavGraph( navController: NavHostController = rememberNavController()) {
         }
         composable(route = Screen.History.route) {
             HistoryScreen(navController, viewModel)
+        }
+        composable(route = Screen.Info.route) {
+            InfoScreen(navController)
         }
     }
 }
