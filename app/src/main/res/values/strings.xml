@@ -13,6 +13,8 @@
     <string name="ftoc">Fahrenheit to Celsius: (F - 32) × 5/9</string>
     <string name="ctok">Celsius to Kelvin: C + 273.15</string>
     <string name="ktoc">Kelvin to Celsius: K - 273.15</string>
+    <string name="share">Share</string>
+    <string name="template_share">Convert from: %1$s %2$s\n  Celsius: %3$.2f\n  Fahrenheit: %4$.2f\n  Kelvin: %5$.2f</string>
 
 
 

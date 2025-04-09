@@ -3,10 +3,13 @@
 package com.davin0115.temppro.screen
 
 import android.content.Context
+import android.content.Intent
+import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,6 +38,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -54,15 +58,29 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.davin0115.cconverter.ui.theme.poppinsFamily
 import com.davin0115.temppro.R
 import com.davin0115.temppro.navigation.Screen
+import com.davin0115.temppro.ui.theme.Greyy
 import com.davin0115.temppro.ui.theme.MainColor
 import com.davin0115.temppro.ui.theme.SecondColor
+import com.davin0115.temppro.ui.theme.TempProTheme
 import com.davin0115.temppro.viewmodel.TemperatureViewModel
+
+@Preview(showBackground = true)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
+@Composable
+fun MainScreenPreview(){
+    TempProTheme {
+        MainScreen(rememberNavController(), viewModel = viewModel())
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -96,6 +114,9 @@ fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel
     listOf("Celsius", "Fahrenheit", "Kelvin")
     val inputValue = input.toFloatOrNull() ?: 0f
     val (celsius, fahrenheit, kelvin) = convertTemperature(inputValue, selectedUnit)
+    val isDark = isSystemInDarkTheme()
+    val borderColor = if (isDark) Color.Gray else Color.LightGray
+
 
     Column(
         modifier = modifier
@@ -126,7 +147,7 @@ fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel
                 .fillMaxWidth()
                 .border(
                     width = 1.dp,
-                    color = Color.Black,
+                    color = borderColor,
                     shape = RoundedCornerShape(12.dp)
                 )
                 .clip(RoundedCornerShape(12.dp))
@@ -145,6 +166,26 @@ fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel
                     Text("$fahrenheit")
                     Text("Kelvin: ", fontFamily = poppinsFamily, fontWeight = FontWeight.Bold)
                     Text(text = "$kelvin")
+                    Button(
+                        onClick = {
+                            shareData(
+                                context = context,
+                                message = context.getString(R.string.template_share, input, selectedUnit,
+                                    celsius, fahrenheit, kelvin)
+                            )
+                        },
+                        modifier = Modifier
+                            .padding(top = 15.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MainColor,
+                            contentColor = Color.White
+                        ),
+                        shape = RoundedCornerShape(30.dp)
+                    ) {
+                        Text(text = stringResource(R.string.share),
+                            fontFamily = poppinsFamily,
+                            fontWeight = FontWeight.SemiBold)
+                    }
                 }
                 IconButton(
                     onClick = {navController.navigate(Screen.Info.route)},
@@ -198,7 +239,6 @@ fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel
                 )
             }
         }
-
     }
 }
 
@@ -281,16 +321,22 @@ fun UnitDropdownWithInput(
 ) {
     var expanded by remember { mutableStateOf(false) }
     val units = listOf("Celsius", "Fahrenheit", "Kelvin")
+    val isDark = isSystemInDarkTheme()
+
 
     OutlinedTextField(
         value = input,
         onValueChange = onInputChange,
         shape = RoundedCornerShape(35.dp),
-        label = { Text(text = stringResource(R.string.label), fontFamily = poppinsFamily) },
+        label = {
+            Text(text = stringResource(R.string.label),
+                fontFamily = poppinsFamily,
+                color = MaterialTheme.colorScheme.onBackground,
+            ) },
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = MainColor,
-            unfocusedBorderColor = Color.Black,
-            disabledBorderColor = Color.LightGray,
+            focusedBorderColor = if (isDark) MainColor else MainColor,
+            unfocusedBorderColor = if (isDark) Color.Gray else Color.LightGray,
+            cursorColor = if (isDark) Color.White else Color.Black,
             errorBorderColor = Color.Red
            ),
 
@@ -311,10 +357,12 @@ fun UnitDropdownWithInput(
                     Text(
                         text = selectedUnit,
                         fontFamily = poppinsFamily,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onBackground,
                     )
                     Icon(
                         Icons.Outlined.ArrowDropDown,
+                        tint = if (isDark) Color.Gray else Color.Black,
                         contentDescription = "Select Unit"
                     )
                 }
@@ -350,6 +398,15 @@ fun UnitDropdownWithInput(
     )
 }
 
+private fun shareData(context: Context, message: String){
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT,message)
+    }
+    if (shareIntent.resolveActivity(context.packageManager) != null) {
+        context.startActivity(shareIntent)
+    }
+}
 
 
 

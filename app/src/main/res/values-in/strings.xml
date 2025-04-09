@@ -14,5 +14,7 @@
     <string name="ftoc">Fahrenheit ke Celsius: (F - 32) × 5/9</string>
     <string name="ctok">Celsius ke Kelvin: C + 273.15</string>
     <string name="ktoc">Kelvin ke Celsius: K - 273.15</string>
+    <string name="share">Bagikan</string>
+    <string name="template_share">Mengkonversi dari: %1$s %2$s\\n  Celsius: %3$.2f\\n  Fahrenheit: %4$.2f\\n  Kelvin: %5$.2f</string>
 
 </resources>
