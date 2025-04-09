@@ -16,5 +16,6 @@
     <string name="ktoc">Kelvin ke Celsius: K - 273.15</string>
     <string name="share">Bagikan</string>
     <string name="template_share">Mengkonversi dari: %1$s %2$s\\n  Celsius: %3$.2f\\n  Fahrenheit: %4$.2f\\n  Kelvin: %5$.2f</string>
+    <string name="about">Tentang</string>
 
 </resources>

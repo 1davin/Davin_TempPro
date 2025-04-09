@@ -6,10 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -63,20 +61,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.davin0115.temppro.ui.theme.poppinsFamily
 import com.davin0115.temppro.R
 import com.davin0115.temppro.navigation.Screen
 import com.davin0115.temppro.ui.theme.Greyy
 import com.davin0115.temppro.ui.theme.MainColor
 import com.davin0115.temppro.ui.theme.SecondColor
 import com.davin0115.temppro.ui.theme.TempProTheme
+import com.davin0115.temppro.ui.theme.poppinsFamily
 import com.davin0115.temppro.viewmodel.TemperatureViewModel
 
 @Preview(showBackground = true)

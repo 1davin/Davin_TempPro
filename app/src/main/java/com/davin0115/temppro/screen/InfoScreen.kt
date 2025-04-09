@@ -62,10 +62,15 @@ fun ScreenContent(modifier: Modifier = Modifier){
         modifier = modifier.padding(20.dp)
     ){
         Text(
+            text = stringResource(R.string.about),
+            fontFamily = poppinsFamily,
+            fontWeight = FontWeight.Bold,
+            fontSize = 70.sp)
+        Text(
             text = stringResource(R.string.definition),
             fontFamily = poppinsFamily,
             fontSize =  17.sp)
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 20.dp)
