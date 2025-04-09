@@ -3,6 +3,7 @@ package com.davin0115.temppro.screen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -54,6 +55,9 @@ fun InfoScreen(navController: NavHostController){
 
 @Composable
 fun ScreenContent(modifier: Modifier = Modifier){
+    val isDark = isSystemInDarkTheme()
+    val borderColor = if (isDark) Color.Gray else Color.LightGray
+
     Column(
         modifier = modifier.padding(20.dp)
     ){
@@ -68,7 +72,7 @@ fun ScreenContent(modifier: Modifier = Modifier){
                 .padding(bottom = 20.dp)
                 .border(
                     width = 1.dp,
-                    color = Color.LightGray,
+                    color = borderColor,
                     shape = RoundedCornerShape(12.dp)
                 )
         ){

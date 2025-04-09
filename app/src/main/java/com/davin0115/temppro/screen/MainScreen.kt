@@ -6,8 +6,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +24,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,6 +32,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.ArrowDropDown
 import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material3.Button
@@ -55,9 +59,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -67,6 +73,7 @@ import androidx.navigation.compose.rememberNavController
 import com.davin0115.temppro.ui.theme.poppinsFamily
 import com.davin0115.temppro.R
 import com.davin0115.temppro.navigation.Screen
+import com.davin0115.temppro.ui.theme.Greyy
 import com.davin0115.temppro.ui.theme.MainColor
 import com.davin0115.temppro.ui.theme.SecondColor
 import com.davin0115.temppro.ui.theme.TempProTheme
@@ -140,7 +147,14 @@ fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel
             inputError = inputError
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Icon(
+            modifier = Modifier
+                .size(25.dp),
+            painter = painterResource(id = R.drawable.exchangeicon),
+            contentDescription = "",
+            tint = if (isDark) Color.LightGray else Greyy
+        )
+
         Column (
             modifier = Modifier
                 .fillMaxWidth()
@@ -160,30 +174,33 @@ fun ScreenContent(modifier: Modifier = Modifier, viewModel: TemperatureViewModel
             {
                 Column {
                     Text("Celsius: ", fontFamily = poppinsFamily, fontWeight = FontWeight.Bold)
-                    Text("$celsius")
+                    Text("$celsius", fontFamily = poppinsFamily)
                     Text("Fahrenheit: ", fontFamily = poppinsFamily, fontWeight = FontWeight.Bold)
-                    Text("$fahrenheit")
+                    Text("$fahrenheit", fontFamily = poppinsFamily)
                     Text("Kelvin: ", fontFamily = poppinsFamily, fontWeight = FontWeight.Bold)
-                    Text(text = "$kelvin")
-                    Button(
-                        onClick = {
-                            shareData(
-                                context = context,
-                                message = context.getString(R.string.template_share, input, selectedUnit,
-                                    celsius, fahrenheit, kelvin)
+                    Text(text = "$kelvin", fontFamily = poppinsFamily)
+                    Box(
+                        modifier = Modifier.
+                            padding(top = 15.dp)
+                            .border(
+                                width = 1.dp,
+                                color = borderColor,
+                                shape = RoundedCornerShape(12.dp)
                             )
-                        },
-                        modifier = Modifier
-                            .padding(top = 15.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MainColor,
-                            contentColor = Color.White
-                        ),
-                        shape = RoundedCornerShape(30.dp)
                     ) {
-                        Text(text = stringResource(R.string.share),
-                            fontFamily = poppinsFamily,
-                            fontWeight = FontWeight.SemiBold)
+                        IconButton (
+                            modifier = Modifier,
+                            onClick = {
+                                shareData(
+                                    context = context,
+                                    message = context.getString(R.string.template_share, input, selectedUnit,
+                                        celsius, fahrenheit, kelvin))}
+                        ){
+                            Icon(
+                                imageVector = Icons.Default.Share,
+                                contentDescription = stringResource(R.string.share)
+                            )
+                        }
                     }
                 }
                 IconButton(
