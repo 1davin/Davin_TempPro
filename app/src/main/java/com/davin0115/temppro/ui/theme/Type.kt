@@ -1,4 +1,4 @@
-package com.davin0115.cconverter.ui.theme
+package com.davin0115.temppro.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

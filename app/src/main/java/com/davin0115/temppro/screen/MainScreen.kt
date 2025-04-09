@@ -64,10 +64,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.davin0115.cconverter.ui.theme.poppinsFamily
+import com.davin0115.temppro.ui.theme.poppinsFamily
 import com.davin0115.temppro.R
 import com.davin0115.temppro.navigation.Screen
-import com.davin0115.temppro.ui.theme.Greyy
 import com.davin0115.temppro.ui.theme.MainColor
 import com.davin0115.temppro.ui.theme.SecondColor
 import com.davin0115.temppro.ui.theme.TempProTheme

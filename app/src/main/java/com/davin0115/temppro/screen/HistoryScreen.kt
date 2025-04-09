@@ -33,7 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.davin0115.cconverter.ui.theme.poppinsFamily
+import com.davin0115.temppro.ui.theme.poppinsFamily
 import com.davin0115.temppro.R
 import com.davin0115.temppro.ui.theme.MainColor
 import com.davin0115.temppro.ui.theme.SecondColor
