@@ -42,9 +42,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -346,7 +346,7 @@ fun UnitDropdownWithInput(
                 fontFamily = poppinsFamily,
                 color = MaterialTheme.colorScheme.onBackground,
             ) },
-        colors = TextFieldDefaults.outlinedTextFieldColors(
+        colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = if (isDark) MainColor else MainColor,
             unfocusedBorderColor = if (isDark) Color.Gray else Color.LightGray,
             cursorColor = if (isDark) Color.White else Color.Black,
