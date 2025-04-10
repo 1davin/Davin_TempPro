@@ -4,6 +4,12 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+repositories {
+    google()
+    mavenCentral()
+}
+
+
 android {
     namespace = "com.davin0115.temppro"
     compileSdk = 35
